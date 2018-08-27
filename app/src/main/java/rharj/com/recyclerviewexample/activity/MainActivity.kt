@@ -3,14 +3,20 @@ package rharj.com.recyclerviewexample.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import rharj.com.recyclerviewexample.R
 import rharj.com.recyclerviewexample.adapter.AnimalListAdapter
+import rharj.com.recyclerviewexample.listeners.OnAnimalClick
 import rharj.com.recyclerviewexample.model.AnimalModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),OnAnimalClick {
+    override fun onAnimalClick(animalModel: AnimalModel) {
+        Toast.makeText(this,"You clicked " + animalModel.animalName,Toast.LENGTH_SHORT).show()
+    }
 
-   var animalList :  ArrayList<AnimalModel> = ArrayList()
+    var animalList :  ArrayList<AnimalModel> = ArrayList()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,10 +28,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeControls() {
 
-        animal_list.layoutManager = LinearLayoutManager(this)
-        animal_list.adapter = AnimalListAdapter(animalList,this)
+        animal_list.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+        animal_list.adapter = AnimalListAdapter(animalList,this,this)
 
-        itemList();
+        itemList()
     }
 
     private fun itemList(){

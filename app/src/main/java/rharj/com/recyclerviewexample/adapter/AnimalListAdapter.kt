@@ -8,11 +8,15 @@ import rharj.com.recyclerviewexample.model.AnimalModel
 import android.view.View
 import android.view.ViewGroup
 import rharj.com.recyclerviewexample.R
+import rharj.com.recyclerviewexample.listeners.OnAnimalClick
 
-class AnimalListAdapter(val items : ArrayList<AnimalModel>, val context: Context) :RecyclerView.Adapter<AnimalListAdapter.ViewHolder>(){
+class AnimalListAdapter(private val items : ArrayList<AnimalModel>, private val context: Context,private val onAnimalClick: OnAnimalClick):RecyclerView.Adapter<AnimalListAdapter.ViewHolder>(){
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder?.animalType?.text = items[position].animalName
+        holder?.animalType?.setOnClickListener(View.OnClickListener {
+            onAnimalClick?.onAnimalClick(items[position])
+        })
     }
 
 
